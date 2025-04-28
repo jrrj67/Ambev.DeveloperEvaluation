@@ -1,3 +1,4 @@
+﻿using Ambev.DeveloperEvaluation.Application.Users.GetUser.Responses;
 using MediatR;
 
 namespace Ambev.DeveloperEvaluation.Application.Users.GetUser.Commands;
@@ -5,7 +6,7 @@ namespace Ambev.DeveloperEvaluation.Application.Users.GetUser.Commands;
 /// <summary>
 /// Command for retrieving a user by their ID
 /// </summary>
-public record GetUserCommand : IRequest<GetUserResult>
+public record GetUserCommand : IRequest<GetUserResponse>
 {
     /// <summary>
     /// The unique identifier of the user to retrieve

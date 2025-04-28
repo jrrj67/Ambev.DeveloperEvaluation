@@ -1,8 +1,9 @@
-﻿using Ambev.DeveloperEvaluation.Common.Validation;
+using Ambev.DeveloperEvaluation.Application.Users.CreateUser.Responses;
+using Ambev.DeveloperEvaluation.Application.Users.CreateUser.Validators;
 using Ambev.DeveloperEvaluation.Domain.Enums;
 using MediatR;
 
-namespace Ambev.DeveloperEvaluation.Application.Users.CreateUser;
+namespace Ambev.DeveloperEvaluation.Application.Users.CreateUser.Commands;
 
 /// <summary>
 /// Command for creating a new user.
@@ -11,14 +12,14 @@ namespace Ambev.DeveloperEvaluation.Application.Users.CreateUser;
 /// This command is used to capture the required data for creating a user, 
 /// including username, password, phone number, email, status, and role. 
 /// It implements <see cref="IRequest{TResponse}"/> to initiate the request 
-/// that returns a <see cref="CreateUserResult"/>.
+/// that returns a <see cref="CreateUserResponse"/>.
 /// 
 /// The data provided in this command is validated using the 
 /// <see cref="CreateUserCommandValidator"/> which extends 
 /// <see cref="AbstractValidator{T}"/> to ensure that the fields are correctly 
 /// populated and follow the required rules.
 /// </remarks>
-public class CreateUserCommand : IRequest<CreateUserResult>
+public class CreateUserCommand : IRequest<CreateUserResponse>
 {
     /// <summary>
     /// Gets or sets the username of the user to be created.
@@ -50,15 +51,13 @@ public class CreateUserCommand : IRequest<CreateUserResult>
     /// </summary>
     public UserRole Role { get; set; }
 
+    /// <summary>
+    /// Gets or sets the full name of the user.
+    /// </summary>
+    public CreateNameInfoCommand Name { get; set; } = new CreateNameInfoCommand();
 
-    public ValidationResultDetail Validate()
-    {
-        var validator = new CreateUserCommandValidator();
-        var result = validator.Validate(this);
-        return new ValidationResultDetail
-        {
-            IsValid = result.IsValid,
-            Errors = result.Errors.Select(o => (ValidationErrorDetail)o)
-        };
-    }
+    /// <summary>
+    /// Gets or sets the address of the user.
+    /// </summary>
+    public CreateAddressInfoCommand Address { get; set; } = new CreateAddressInfoCommand();
 }
